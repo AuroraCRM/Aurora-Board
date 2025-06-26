@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-slate-200; /* Um fundo um pouco mais escuro para a página inteira */
+  font-family: 'Inter', sans-serif; /* Uma fonte sans-serif mais moderna, se disponível */
+}
+
+/* Adicionando um fallback caso Inter não carregue ou não esteja no sistema */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');

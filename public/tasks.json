@@ -1,0 +1,44 @@
+[
+  {
+    "id": "TASK-1",
+    "title": "Configurar Ambiente de Desenvolvimento",
+    "description": "Instalar Node, Vite, React, TypeScript e Tailwind CSS.",
+    "status": "Concluído",
+    "assignee": "Jules"
+  },
+  {
+    "id": "TASK-2",
+    "title": "Criar Componentes Base",
+    "description": "Desenvolver os componentes TaskCard, Column e Board.",
+    "status": "Em Andamento",
+    "assignee": "Jules"
+  },
+  {
+    "id": "TASK-3",
+    "title": "Implementar Drag-and-Drop",
+    "description": "Adicionar funcionalidade de arrastar e soltar com react-beautiful-dnd.",
+    "status": "Backlog",
+    "assignee": "DeepSeek"
+  },
+  {
+    "id": "TASK-4",
+    "title": "Estilização e Layout",
+    "description": "Aplicar estilos com Tailwind CSS para o board e cards.",
+    "status": "Backlog",
+    "assignee": "Jules"
+  },
+  {
+    "id": "TASK-5",
+    "title": "Testes e Refatoração",
+    "description": "Realizar testes funcionais e refatorar o código conforme necessário.",
+    "status": "Backlog",
+    "assignee": "Humano"
+  },
+  {
+    "id": "TASK-6",
+    "title": "Revisar Documentação da API Externa",
+    "description": "Ler a documentação da API de pagamentos para integração futura.",
+    "status": "Em Revisão",
+    "assignee": "DeepSeek"
+  }
+]
