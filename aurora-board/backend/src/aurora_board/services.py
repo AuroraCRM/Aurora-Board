@@ -321,3 +321,31 @@ def _update_card_positions_on_delete(db: Session, list_id: int, deleted_item_pos
 #         card_update_schema = schemas.CardUpdate(list_id=nl_id, position=np)
 #         return update_card(db_session, c_id, card_update_schema)
 #     return _execute_atomic(db, operation, card_id, new_list_id, new_position)
+
+
+# User Services
+from . import security # For password hashing
+
+def get_user_by_username(db: Session, username: str) -> models.User | None:
+    return db.query(models.User).filter(models.User.username == username).first()
+
+def create_user(db: Session, user: schemas.UserCreate) -> models.User:
+    def operation(db_session, user_data):
+        # Check if user already exists (optional, can be done at endpoint level too)
+        # db_user = get_user_by_username(db_session, username=user_data.username)
+        # if db_user:
+        #     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Username already registered")
+
+        hashed_password = security.hash_password(user_data.password)
+        db_user = models.User(username=user_data.username, hashed_password=hashed_password)
+        db_session.add(db_user)
+        # db_session.commit() # Managed by _execute_atomic or test fixture
+        # db_session.refresh(db_user) # Managed by _execute_atomic or test fixture
+        return db_user
+    # Note: _execute_atomic expects the operation func to take db as its first arg.
+    # We can wrap it or ensure create_user is called within an existing atomic context if needed.
+    # For simplicity here, assuming direct call or _execute_atomic handles it.
+    # If create_user is meant to be a top-level service call that's atomic:
+    return _execute_atomic(db, operation, user)
+    # If it's called by another service that's already atomic, direct call to operation:
+    # return operation(db, user)

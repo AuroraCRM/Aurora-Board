@@ -42,3 +42,17 @@ class Card(Base):
     # category_tags = Column(JSON, nullable=True) # For AI-generated tags
 
     list = relationship("List", back_populates="cards")
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    # email = Column(String, unique=True, index=True, nullable=True) # Optional: if email is needed
+    # full_name = Column(String, index=True, nullable=True) # Optional
+    # is_active = Column(Boolean, default=True) # Optional: for deactivating users
+    # is_superuser = Column(Boolean, default=False) # Optional: for admin users
+
+    # Add any relationships to other models if needed, e.g., if users own boards
+    # owned_boards = relationship("Board", back_populates="owner")

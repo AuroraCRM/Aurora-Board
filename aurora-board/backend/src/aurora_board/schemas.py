@@ -26,6 +26,30 @@ class Card(CardBase):
 
     model_config = ConfigDict(from_attributes=True)
 
+
+# User Schemas
+class UserBase(BaseModel):
+    username: str
+
+class UserCreate(UserBase):
+    password: str
+
+class User(UserBase):
+    id: int
+    # email: Optional[str] = None # Include if User model has email
+    # full_name: Optional[str] = None # Include if User model has full_name
+    # is_active: bool = True # Include if User model has is_active
+
+    model_config = ConfigDict(from_attributes=True)
+
+# Token Schemas
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
+
 # List Schemas (using ListSchema naming convention)
 class ListSchemaBase(BaseModel):
     name: str
