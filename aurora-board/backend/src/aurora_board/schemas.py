@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import List as PyList, Optional
 from datetime import datetime
 
@@ -24,8 +24,7 @@ class Card(CardBase):
     created_at: datetime
     updated_at: Optional[datetime] = None
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 # List Schemas (using ListSchema naming convention)
 class ListSchemaBase(BaseModel):
@@ -47,8 +46,7 @@ class ListSchema(ListSchemaBase):
     created_at: datetime
     updated_at: Optional[datetime] = None
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 # Board Schemas
 class BoardBase(BaseModel):
@@ -68,5 +66,4 @@ class Board(BoardBase):
     created_at: datetime
     updated_at: Optional[datetime] = None
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
