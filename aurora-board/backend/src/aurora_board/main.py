@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List as PyList
 
@@ -128,3 +128,35 @@ def read_root():
 # A common practice is to run from the project root and specify the app module path.
 # Example, if you are in the `aurora-board` directory:
 # PYTHONPATH=./backend/src uvicorn aurora_board.main:app --reload
+
+from fastapi.security import OAuth2PasswordRequestForm
+from typing import Annotated
+from . import security as auth_security # Renamed to avoid conflict with services.security if any
+from datetime import timedelta
+
+# Authentication Endpoint
+@app.post("/auth/token", response_model=schemas.Token)
+async def login_for_access_token(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    db: Session = Depends(get_db)
+):
+    user = services.get_user_by_username(db, username=form_data.username)
+    if not user or not auth_security.verify_password(form_data.password, user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    access_token_expires = timedelta(minutes=auth_security.ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = auth_security.create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
+
+# User Registration Endpoint
+@app.post("/users/", response_model=schemas.User, status_code=status.HTTP_201_CREATED)
+def create_new_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    db_user = services.get_user_by_username(db, username=user.username)
+    if db_user:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Username already registered")
+    return services.create_user(db=db, user=user)
