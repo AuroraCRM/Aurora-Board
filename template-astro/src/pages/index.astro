@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+---
+<BaseLayout>
+  <HeroSection />
+  <section class="py-16 px-4 grid sm:grid-cols-3 gap-6 max-w-6xl mx-auto">
+    <FeatureCard title="Arquitetura Híbrida">
+      Combinação inteligente de modelos on-device e na nuvem, orquestrados pelo aurora-router.
+    </FeatureCard>
+    <FeatureCard title="Fábrica de IA">
+      Desenvolvimento contínuo onde Aurora delega tarefas para agentes especialistas.
+    </FeatureCard>
+    <FeatureCard title="Memória Ativa">
+      Base de conhecimento que aprende de forma automatizada e constante.
+    </FeatureCard>
+  </section>
+</BaseLayout>
