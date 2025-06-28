@@ -86,6 +86,7 @@ class BoardUpdate(BoardBase):
 
 class Board(BoardBase):
     id: int
+    user_id: int # Added to reflect the owner
     lists: PyList[ListSchema] = []
     created_at: datetime
     updated_at: Optional[datetime] = None

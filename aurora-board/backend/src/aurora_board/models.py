@@ -12,6 +12,8 @@ class Board(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    owner = relationship("User", back_populates="boards")
     lists = relationship("List", back_populates="board", cascade="all, delete-orphan")
 
 class List(Base):
@@ -54,5 +56,4 @@ class User(Base):
     # is_active = Column(Boolean, default=True) # Optional: for deactivating users
     # is_superuser = Column(Boolean, default=False) # Optional: for admin users
 
-    # Add any relationships to other models if needed, e.g., if users own boards
-    # owned_boards = relationship("Board", back_populates="owner")
+    boards = relationship("Board", back_populates="owner")
